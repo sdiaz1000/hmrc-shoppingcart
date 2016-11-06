@@ -24,4 +24,12 @@ public class Checkout {
 		}
 		return totalCost;
 	}
+
+	public BigDecimal calculateBOGOFFApplesDeduction(String[] listofItems) {
+		return BigDecimal.ZERO;
+	}
+
+	public BigDecimal calculate3For2OrangeDeduction(String[] listofItems) {
+		return BigDecimal.ZERO;
+	}
 }

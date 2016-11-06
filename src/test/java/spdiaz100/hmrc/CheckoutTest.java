@@ -64,4 +64,19 @@ public class CheckoutTest {
 		assertEquals(BigDecimal.valueOf(2.05), calculateTotalCost);
 	}
 
+	@Test
+	public void withAListContainingNoItems_BOGOFFApplesDeduction_IsZero(){
+		String[] listofItems = {};
+		Checkout checkout = new Checkout();
+		BigDecimal deduction = checkout.calculateBOGOFFApplesDeduction(listofItems);
+		assertEquals(BigDecimal.ZERO, deduction);
+	}
+	
+	@Test
+	public void withAListContainingZeroOranges_3For2OrangeDeduction_Is0(){
+		String[] listofItems = {};
+		Checkout checkout = new Checkout();
+		BigDecimal deduction = checkout.calculate3For2OrangeDeduction(listofItems);
+		assertEquals(BigDecimal.ZERO, deduction);
+	}
 }
