@@ -8,3 +8,6 @@ have implementations of these.
 These Offer implementations could be canned in some sort of CurrentOffers Object
 which would make up part of the Checkout class. Tests would be moved in the 
 appropriate areas.
+
+Also Id prefer the Shopping Items to have their own class which would include the 
+description and price.
