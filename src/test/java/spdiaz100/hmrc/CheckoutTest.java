@@ -13,7 +13,7 @@ public class CheckoutTest {
 		String[] listofItems = {};
 		Checkout checkout = new Checkout();
 		BigDecimal calculateTotalCost = checkout.calculateTotalCost(listofItems);
-		assertEquals(BigDecimal.ZERO, calculateTotalCost);
+		assertEquals(BigDecimal.ZERO.setScale(2), calculateTotalCost);
 	}
 	
 	@Test
@@ -21,7 +21,7 @@ public class CheckoutTest {
 		String[] listofItems = {"Apple"};
 		Checkout checkout = new Checkout();
 		BigDecimal calculateTotalCost = checkout.calculateTotalCost(listofItems);
-		assertEquals(BigDecimal.valueOf(0.60), calculateTotalCost);
+		assertEquals(BigDecimal.valueOf(0.60).setScale(2), calculateTotalCost);
 	}
 	
 	@Test
@@ -29,7 +29,7 @@ public class CheckoutTest {
 		String[] listofItems = {"Orange"};
 		Checkout checkout = new Checkout();
 		BigDecimal calculateTotalCost = checkout.calculateTotalCost(listofItems);
-		assertEquals(BigDecimal.valueOf(0.25), calculateTotalCost);
+		assertEquals(BigDecimal.valueOf(0.25).setScale(2), calculateTotalCost);
 	}
 	
 	@Test
@@ -37,31 +37,39 @@ public class CheckoutTest {
 		String[] listofItems = {"Appange"};
 		Checkout checkout = new Checkout();
 		BigDecimal calculateTotalCost = checkout.calculateTotalCost(listofItems);
-		assertEquals(BigDecimal.ZERO, calculateTotalCost);
+		assertEquals(BigDecimal.ZERO.setScale(2), calculateTotalCost);
 	}
 	
 	@Test
-	public void withAListContainingThreeApples_theTotalCost_is1_80(){
+	public void withAListContainingThreeApples_theTotalCost_is1_20(){
 		String[] listofItems = {"Apple","Apple","Apple"};
 		Checkout checkout = new Checkout();
 		BigDecimal calculateTotalCost = checkout.calculateTotalCost(listofItems);
-		assertEquals(BigDecimal.valueOf(1.80), calculateTotalCost);
+		assertEquals(BigDecimal.valueOf(1.20).setScale(2), calculateTotalCost);
 	}
 
 	@Test
-	public void withAListContainingThreeOranges_theTotalCost_is0_75(){
+	public void withAListContainingThreeOranges_theTotalCost_is0_50(){
 		String[] listofItems = {"Orange","Orange","Orange"};
 		Checkout checkout = new Checkout();
 		BigDecimal calculateTotalCost = checkout.calculateTotalCost(listofItems);
-		assertEquals(BigDecimal.valueOf(0.75), calculateTotalCost);
+		assertEquals(BigDecimal.valueOf(0.50).setScale(2), calculateTotalCost);
 	}
 
 	@Test
-	public void withAListContainingThreeApplesAndAnOrange_theTotalCost_is2_05(){
+	public void withAListContainingThreeApplesAndAnOrange_theTotalCost_is1_45(){
 		String[] listofItems = {"Apple","Apple","Orange","Apple"};
 		Checkout checkout = new Checkout();
 		BigDecimal calculateTotalCost = checkout.calculateTotalCost(listofItems);
-		assertEquals(BigDecimal.valueOf(2.05), calculateTotalCost);
+		assertEquals(BigDecimal.valueOf(1.45).setScale(2), calculateTotalCost);
+	}
+
+	@Test
+	public void withAListContainingThreeApplesAndThreeOrange_theTotalCost_is1_70(){
+		String[] listofItems = {"Apple","Apple","Orange","Apple", "Orange","Orange",};
+		Checkout checkout = new Checkout();
+		BigDecimal calculateTotalCost = checkout.calculateTotalCost(listofItems);
+		assertEquals(BigDecimal.valueOf(1.70).setScale(2), calculateTotalCost);
 	}
 
 	@Test
@@ -69,7 +77,31 @@ public class CheckoutTest {
 		String[] listofItems = {};
 		Checkout checkout = new Checkout();
 		BigDecimal deduction = checkout.calculateBOGOFFApplesDeduction(listofItems);
-		assertEquals(BigDecimal.ZERO, deduction);
+		assertEquals(BigDecimal.ZERO.setScale(2), deduction);
+	}
+	
+	@Test
+	public void withAListContainingTwoApples_BOGOFFApplesDeduction_Is60p(){
+		String[] listofItems = {"Apple","Apple"};
+		Checkout checkout = new Checkout();
+		BigDecimal deduction = checkout.calculateBOGOFFApplesDeduction(listofItems);
+		assertEquals(BigDecimal.valueOf(0.60).setScale(2), deduction);
+	}
+
+	@Test
+	public void withAListContainingThreeApples_BOGOFFApplesDeduction_Is60p(){
+		String[] listofItems = {"Apple", "Apple", "Apple"};
+		Checkout checkout = new Checkout();
+		BigDecimal deduction = checkout.calculateBOGOFFApplesDeduction(listofItems);
+		assertEquals(BigDecimal.valueOf(0.60).setScale(2), deduction);
+	}
+
+	@Test
+	public void withAListContainingFiveApples_BOGOFFApplesDeduction_Is1_20(){
+		String[] listofItems = {"Apple","Apple", "Apple","Apple","Apple"};
+		Checkout checkout = new Checkout();
+		BigDecimal deduction = checkout.calculateBOGOFFApplesDeduction(listofItems);
+		assertEquals(BigDecimal.valueOf(1.20).setScale(2), deduction);
 	}
 	
 	@Test
@@ -77,6 +109,38 @@ public class CheckoutTest {
 		String[] listofItems = {};
 		Checkout checkout = new Checkout();
 		BigDecimal deduction = checkout.calculate3For2OrangeDeduction(listofItems);
-		assertEquals(BigDecimal.ZERO, deduction);
+		assertEquals(BigDecimal.ZERO.setScale(2), deduction);
+	}
+
+	@Test
+	public void withAListContainingTwoOranges_3For2OrangeDeduction_IsZero(){
+		String[] listofItems = {"Orange","Orange"};
+		Checkout checkout = new Checkout();
+		BigDecimal deduction = checkout.calculate3For2OrangeDeduction(listofItems);
+		assertEquals(BigDecimal.ZERO.setScale(2), deduction);
+	}
+
+	@Test
+	public void withAListContainingThreeOranges_3For2OrangeDeduction_Is25p(){
+		String[] listofItems = {"Orange", "Orange", "Orange"};
+		Checkout checkout = new Checkout();
+		BigDecimal deduction = checkout.calculate3For2OrangeDeduction(listofItems);
+		assertEquals(BigDecimal.valueOf(0.25).setScale(2), deduction);
+	}
+
+	@Test
+	public void withAListContainingFiveOrange_3For2OrangeDeduction_Is25p(){
+		String[] listofItems = {"Orange", "Orange", "Orange", "Orange", "Orange"};
+		Checkout checkout = new Checkout();
+		BigDecimal deduction = checkout.calculate3For2OrangeDeduction(listofItems);
+		assertEquals(BigDecimal.valueOf(0.25).setScale(2), deduction);
+	}
+
+	@Test
+	public void withAListContainingSixOrange_3For2OrangeDeduction_Is50p(){
+		String[] listofItems = {"Orange", "Orange", "Orange", "Orange", "Orange", "Orange"};
+		Checkout checkout = new Checkout();
+		BigDecimal deduction = checkout.calculate3For2OrangeDeduction(listofItems);
+		assertEquals(BigDecimal.valueOf(0.50).setScale(2), deduction);
 	}
 }
